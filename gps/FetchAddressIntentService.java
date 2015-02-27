@@ -1,4 +1,4 @@
-package bigdogconsultants.co.uk.stormy2;
+package bigdogconsultants.co.uk.stormy2.gps;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -9,12 +9,12 @@ import android.os.ResultReceiver;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.google.android.gms.identity.intents.Address;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import bigdogconsultants.co.uk.stormy2.R;
 
 /**
  * Created by stevehunter on 15/02/15.

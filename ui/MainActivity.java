@@ -1,10 +1,8 @@
-package bigdogconsultants.co.uk.stormy2;
+package bigdogconsultants.co.uk.stormy2.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
@@ -12,7 +10,6 @@ import android.net.NetworkInfo;
 import android.os.ResultReceiver;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,7 +19,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.identity.intents.Address;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -36,13 +32,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
+import bigdogconsultants.co.uk.stormy2.gps.Constants;
+import bigdogconsultants.co.uk.stormy2.gps.FetchAddressIntentService;
+import bigdogconsultants.co.uk.stormy2.R;
+import bigdogconsultants.co.uk.stormy2.weather.Current;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -50,7 +44,7 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     public static final String TAG = MainActivity.class.getSimpleName();
-    private CurrentWeather mCurrentWeather;
+    private Current mCurrent;
     private Location mCurrentLocation;
     public LocationRequest mLocationRequest;
     private LocationManager mLocationManager;
@@ -146,7 +140,7 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
                         String jsonData = response.body().string();
                         Log.v(TAG, jsonData);
                         if (response.isSuccessful()) {
-                            mCurrentWeather = getCurrentDetails(jsonData);
+                            mCurrent = getCurrentDetails(jsonData);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -184,31 +178,31 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
 
     private void updateDisplay() {
 
-        mTemperatureLabel.setText(mCurrentWeather.getTemperature() + "");
-        mTimeLabel.setText("At " + mCurrentWeather.getFormattedTime() + " it will be:");
-        mHumidityValue.setText(mCurrentWeather.getHumidity() + "%");
-        mPrecipValue.setText(mCurrentWeather.getPrecipChance() + "%");
-        mSummaryLabel.setText(mCurrentWeather.getSummary());
+        mTemperatureLabel.setText(mCurrent.getTemperature() + "");
+        mTimeLabel.setText("At " + mCurrent.getFormattedTime() + " it will be:");
+        mHumidityValue.setText(mCurrent.getHumidity() + "%");
+        mPrecipValue.setText(mCurrent.getPrecipChance() + "%");
+        mSummaryLabel.setText(mCurrent.getSummary());
 
-        Drawable drawable = getResources().getDrawable(mCurrentWeather.getIconId());
+        Drawable drawable = getResources().getDrawable(mCurrent.getIconId());
         mIconImageView.setImageDrawable(drawable);
 
     }
 
-    private CurrentWeather getCurrentDetails(String jsonData) throws JSONException {
+    private Current getCurrentDetails(String jsonData) throws JSONException {
         JSONObject forecast = new JSONObject(jsonData);
         JSONObject currently = forecast.getJSONObject("currently");
 
-        CurrentWeather currentWeather = new CurrentWeather();
-        currentWeather.setTemperature(currently.getDouble("temperature"));
-        currentWeather.setHumidity(currently.getDouble("humidity"));
-        currentWeather.setTime(currently.getLong("time"));
-        currentWeather.setIcon(currently.getString("icon"));
-        currentWeather.setPrecipChance(currently.getDouble("precipProbability"));
-        currentWeather.setSummary(currently.getString("summary"));
-        currentWeather.setTimezone(forecast.getString("timezone"));
-        Log.d(TAG, currentWeather.getFormattedTime());
-        return currentWeather;
+        Current current = new Current();
+        current.setTemperature(currently.getDouble("temperature"));
+        current.setHumidity(currently.getDouble("humidity"));
+        current.setTime(currently.getLong("time"));
+        current.setIcon(currently.getString("icon"));
+        current.setPrecipChance(currently.getDouble("precipProbability"));
+        current.setSummary(currently.getString("summary"));
+        current.setTimezone(forecast.getString("timezone"));
+        Log.d(TAG, current.getFormattedTime());
+        return current;
     }
 
     private boolean isNetworkAvailable() {

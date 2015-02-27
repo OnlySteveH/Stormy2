@@ -1,10 +1,12 @@
-package bigdogconsultants.co.uk.stormy2;
+package bigdogconsultants.co.uk.stormy2.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
+
+import bigdogconsultants.co.uk.stormy2.R;
 
 /**
  * Created by stevehunter on 06/02/15.
