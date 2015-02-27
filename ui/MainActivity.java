@@ -7,9 +7,9 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -33,10 +33,11 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import bigdogconsultants.co.uk.stormy2.R;
 import bigdogconsultants.co.uk.stormy2.gps.Constants;
 import bigdogconsultants.co.uk.stormy2.gps.FetchAddressIntentService;
-import bigdogconsultants.co.uk.stormy2.R;
 import bigdogconsultants.co.uk.stormy2.weather.Current;
+import bigdogconsultants.co.uk.stormy2.weather.Forecast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -187,6 +188,11 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         Drawable drawable = getResources().getDrawable(mCurrent.getIconId());
         mIconImageView.setImageDrawable(drawable);
 
+    }
+
+    private Forecast parseForecastDetails(String jsonData) {
+        Forecast forecast = new Forecast();
+        return forecast;
     }
 
     private Current getCurrentDetails(String jsonData) throws JSONException {
