@@ -53,26 +53,19 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
 
     public LocationRequest mLocationRequest;
     public GoogleApiClient mGoogleApiClient;
-    public FetchAddressIntentService mAddressIntentService;
+    // public FetchAddressIntentService mAddressIntentService;
     public ResultReceiver mResultReceiver;
     public double mLatitude = 53.1;
     public double mLongitude = 1.3;
-    @InjectView(R.id.timeLabel)
-    TextView mTimeLabel;
-    @InjectView(R.id.temperatureLabel)
-    TextView mTemperatureLabel;
-    @InjectView(R.id.humidityValue)
-    TextView mHumidityValue;
-    @InjectView(R.id.precipValue)
-    TextView mPrecipValue;
-    @InjectView(R.id.summaryLabel)
-    TextView mSummaryLabel;
-    @InjectView(R.id.iconImageView)
-    ImageView mIconImageView;
-    @InjectView(R.id.refreshImageView)
-    ImageView mRefreshImageView;
-    @InjectView(R.id.progressBar)
-    ProgressBar mProgressBar;
+    @InjectView(R.id.timeLabel) TextView mTimeLabel;
+    @InjectView(R.id.temperatureLabel) TextView mTemperatureLabel;
+    @InjectView(R.id.humidityValue) TextView mHumidityValue;
+    @InjectView(R.id.precipValue) TextView mPrecipValue;
+    @InjectView(R.id.summaryLabel) TextView mSummaryLabel;
+    @InjectView(R.id.iconImageView) ImageView mIconImageView;
+    @InjectView(R.id.refreshImageView) ImageView mRefreshImageView;
+    @InjectView(R.id.progressBar) ProgressBar mProgressBar;
+
     private Forecast mForecast;
     private Location mCurrentLocation;
     private LocationManager mLocationManager;
@@ -226,7 +219,7 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         JSONArray data = daily.getJSONArray("data");
 
         Day[] days = new Day[data.length()];
-        for (int i = 0; i < daily.length(); i++) {
+        for (int i = 0; i < data.length(); i++) {
             JSONObject jsonDay = data.getJSONObject(i);
             Day day = new Day();
             day.setSummary(jsonDay.getString("summary"));
@@ -237,7 +230,7 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
 
             days[i] = day;
         }
-
+// tested to here - we have an array of eight days' weather.
         return days;
     }
 

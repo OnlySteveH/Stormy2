@@ -20,9 +20,8 @@ import bigdogconsultants.co.uk.stormy2.R;
  * Created by stevehunter on 15/02/15.
  */
 public class FetchAddressIntentService extends IntentService {
-    protected ResultReceiver mReceiver;
-
     public static final String TAG = FetchAddressIntentService.class.getSimpleName();
+    protected ResultReceiver mReceiver;
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -90,6 +89,5 @@ public class FetchAddressIntentService extends IntentService {
                         TextUtils.join(System.getProperty("line.separator"),
                                 addressFragments));
             }
-
     }
 }

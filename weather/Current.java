@@ -2,6 +2,7 @@ package bigdogconsultants.co.uk.stormy2.weather;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 /**
@@ -45,14 +46,15 @@ public class Current {
     }
 
     public String getFormattedTime(){
-        SimpleDateFormat formatter = new SimpleDateFormat("h:mm a");
+        SimpleDateFormat formatter = new SimpleDateFormat("h:mm a", Locale.ENGLISH);
         formatter.setTimeZone(TimeZone.getTimeZone(getTimezone()));
         Date dateTime = new Date(getTime() * 1000);
         return formatter.format(dateTime);
     }
 
     public int getTemperature() {
-        return (int)Math.round(mTemperature);
+        double celsius = (mTemperature - 32.0) * 0.5555;
+        return (int)Math.round(celsius);
     }
 
     public void setTemperature(double temperature) {

@@ -12,7 +12,6 @@ public class Hour {
 
     private String mTimezone;
 
-
     public String getSummary() {
         return mSummary;
     }
@@ -37,8 +36,8 @@ public class Hour {
         mTime = time;
     }
 
-    public double getTemperature() {
-        return mTemperature;
+    public int getTemperature() {
+        return (int) Math.round((mTemperature - 32) * (5 / 9));
     }
 
     public void setTemperature(double temperature) {

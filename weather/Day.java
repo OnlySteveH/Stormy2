@@ -5,12 +5,14 @@ import android.os.Parcelable;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 /**
  * Created by stevehunter on 27/02/15.
  */
 public class Day implements Parcelable {
+
     public static final Creator<Day> CREATOR = new Creator<Day>() {
         @Override
         public Day createFromParcel(Parcel source) {
@@ -27,6 +29,10 @@ public class Day implements Parcelable {
     private long mTime;
     private double mTemperatureMax;
     private String mTimezone;
+
+    public Day() {
+        // public constructor
+    }
 
     private Day(Parcel in) {
         mTime = in.readLong();
@@ -65,7 +71,8 @@ public class Day implements Parcelable {
     }
 
     public int getTemperatureMax() {
-        return (int) Math.round(mTemperatureMax);
+        Double celsius = (mTemperatureMax - 32.0) * 0.5555;
+        return (int) Math.round(celsius);
     }
 
     public void setTemperatureMax(double temperatureMax) {
@@ -81,15 +88,15 @@ public class Day implements Parcelable {
     }
 
     public String getDayOfTheWeek(){
-        SimpleDateFormat formatter = new SimpleDateFormat("EEEE");
+        SimpleDateFormat formatter = new SimpleDateFormat("EEEE", Locale.ENGLISH);
         formatter.setTimeZone(TimeZone.getTimeZone(mTimezone));
-        Date dateTime = new Date(mTime * 1000);
+        Date dateTime = new Date(mTime * 1000); // convert from seconds to milliseconds
         return formatter.format(dateTime);
     }
 
     @Override
     public int describeContents() {
-        return 0; // not used for us
+        return 0; // not used for this
     }
 
     @Override
@@ -100,4 +107,5 @@ public class Day implements Parcelable {
         dest.writeString(mIcon);
         dest.writeString(mTimezone);
     }
+
 }
