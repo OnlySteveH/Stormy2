@@ -49,6 +49,8 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     public static final String TAG = MainActivity.class.getSimpleName();
+    public static final String DAILY_FORECAST = "DAILY_FORECAST";
+
     public LocationRequest mLocationRequest;
     public GoogleApiClient mGoogleApiClient;
     public FetchAddressIntentService mAddressIntentService;
@@ -78,6 +80,7 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
     @OnClick(R.id.dailyButton)
     public void startDailyActivity(View view) {
         Intent intent = new Intent(this, DailyForecastActivity.class);
+        intent.putExtra(DAILY_FORECAST, mForecast.getDailyForecast());
         startActivity(intent);
     }
 
