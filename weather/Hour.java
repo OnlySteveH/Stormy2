@@ -3,6 +3,10 @@ package bigdogconsultants.co.uk.stormy2.weather;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by stevehunter on 27/02/15.
  */
@@ -53,6 +57,10 @@ public class Hour implements Parcelable{
         mIcon = icon;
     }
 
+    public int getIconId(){
+        return Forecast.getIconId(mIcon);
+    }
+
     public long getTime() {
         return mTime;
     }
@@ -61,8 +69,15 @@ public class Hour implements Parcelable{
         mTime = time;
     }
 
+    public String getHour() {
+        SimpleDateFormat formatter = new SimpleDateFormat("h a", Locale.ENGLISH);
+        Date date = new Date(mTime * 1000);
+        return formatter.format(date);
+    }
+
     public int getTemperature() {
-        return (int) Math.round((mTemperature - 32) * (5 / 9));
+        double celsius = (mTemperature - 32.0) * 0.55555;
+        return (int) Math.round(celsius);
     }
 
     public void setTemperature(double temperature) {
