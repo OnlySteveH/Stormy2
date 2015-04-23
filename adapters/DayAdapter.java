@@ -1,6 +1,7 @@
 package bigdogconsultants.co.uk.stormy2.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,22 @@ public class DayAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.iconImageView = (ImageView) convertView.findViewById(R.id.iconImageView);
             holder.temperatureLabel = (TextView) convertView.findViewById(R.id.temperatureLabel);
-            holder.dayLabel = (TextView) convertView.findViewById(R.id.dayNameLabel);
+            //holder.dayLabel = (TextView) convertView.findViewById(R.id.dayNameLabel);
+            if (position == 0) {
+            /**    TextView textView = (TextView) convertView.findViewById(R.id.todayNameLabel);
+                textView.setVisibility(View.VISIBLE);
+                holder.dayLabel = textView; **/
+                TextView textView = (TextView) convertView.findViewById(R.id.dayNameLabel);
+                textView.setText("Today");
+                holder.dayLabel = textView;
+
+            } else {
+                //TextView textView = (TextView) convertView.findViewById(R.id.todayNameLabel);
+                //textView.setVisibility(View.INVISIBLE);
+                holder.dayLabel = (TextView) convertView.findViewById(R.id.dayNameLabel);
+            }
+
+            Log.e("TAG", "Label: " + holder.dayLabel.getText() + " and position: " + position);
 
             convertView.setTag(holder);
 

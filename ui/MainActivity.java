@@ -58,6 +58,7 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
     public ResultReceiver mResultReceiver;
     public double mLatitude = 53.1;
     public double mLongitude = 1.3;
+     public String newString = new String();
     @InjectView(R.id.timeLabel) TextView mTimeLabel;
     @InjectView(R.id.temperatureLabel) TextView mTemperatureLabel;
     @InjectView(R.id.humidityValue) TextView mHumidityValue;
@@ -66,7 +67,6 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
     @InjectView(R.id.iconImageView) ImageView mIconImageView;
     @InjectView(R.id.refreshImageView) ImageView mRefreshImageView;
     @InjectView(R.id.progressBar) ProgressBar mProgressBar;
-
     private Forecast mForecast;
     private Location mCurrentLocation;
     private LocationManager mLocationManager;

@@ -12,6 +12,12 @@ import bigdogconsultants.co.uk.stormy2.R;
  * Created by stevehunter on 06/02/15.
  */
 public class AlertDialogFragment extends DialogFragment {
+    //public String mHand;
+    //char tile = 'k';
+
+
+
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Context context = getActivity();
@@ -21,5 +27,7 @@ public class AlertDialogFragment extends DialogFragment {
                                             .setPositiveButton(context.getString(R.string.error_OK_button_text), null);
         AlertDialog dialog = builder.create();
         return dialog;
+
+
     }
 }

@@ -24,6 +24,7 @@ public class DailyForecastActivity extends Activity {
     @InjectView(android.R.id.empty) TextView mEmptyTextView;
     private Day[] mDays;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
