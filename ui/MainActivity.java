@@ -3,6 +3,8 @@ package bigdogconsultants.co.uk.stormy2.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
@@ -33,6 +35,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import bigdogconsultants.co.uk.stormy2.R;
 import bigdogconsultants.co.uk.stormy2.gps.Constants;
@@ -58,6 +62,8 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
     public ResultReceiver mResultReceiver;
     public double mLatitude = 53.1;
     public double mLongitude = 1.3;
+    public String mCity;
+    public String mCountryCode;
      public String newString = new String();
     @InjectView(R.id.timeLabel) TextView mTimeLabel;
     @InjectView(R.id.temperatureLabel) TextView mTemperatureLabel;
@@ -67,6 +73,7 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
     @InjectView(R.id.iconImageView) ImageView mIconImageView;
     @InjectView(R.id.refreshImageView) ImageView mRefreshImageView;
     @InjectView(R.id.progressBar) ProgressBar mProgressBar;
+    @InjectView(R.id.locationLabel) TextView mLocationLabel;
     private Forecast mForecast;
     private Location mCurrentLocation;
     private LocationManager mLocationManager;
@@ -84,6 +91,13 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         intent.putExtra(HOURLY_FORECAST, mForecast.getHourlyForecast());
         startActivity(intent);
     }
+
+//    public String getRealTime(){
+//        SimpleDateFormat format = new SimpleDateFormat("k:mm", Locale.US);
+//        format.setTimeZone(TimeZone.getTimeZone("GMT-8:00"));
+//        Date day = new Date();
+//        return format.format(day);
+//    }
 
 
     @Override
@@ -207,6 +221,7 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
 
         Drawable drawable = getResources().getDrawable(current.getIconId());
         mIconImageView.setImageDrawable(drawable);
+        mLocationLabel.setText(mCity + ", " + mCountryCode);
 
     }
 
@@ -298,11 +313,27 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
 
     @Override
     public void onConnected(Bundle bundle) {
+        Geocoder gcd = new Geocoder(this, Locale.getDefault());
+
+
         mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         Log.d(TAG, "Last location: " + mCurrentLocation);
         if (mCurrentLocation != null) {
             mLatitude = mCurrentLocation.getLatitude();
             mLongitude = mCurrentLocation.getLongitude();
+            List<Address> addresses = null;
+            try {
+                addresses = gcd.getFromLocation(mLatitude, mLongitude, 1);
+            } catch (IOException e) {
+                Log.e(TAG, "No GCD location resolved.");
+            }
+            if (addresses != null) {
+                mCity = addresses.get(0).getLocality();
+                mCountryCode = addresses.get(0).getCountryCode();
+            } else {
+                Log.d(TAG, "No address details available");
+                Toast.makeText(this, "No address details", Toast.LENGTH_LONG).show();
+            }
         } else {
             // use hard-coded location as can't update to current
             Toast.makeText(this, "Using default lat & long", Toast.LENGTH_LONG).show();
