@@ -20,10 +20,11 @@ import butterknife.InjectView;
 
 public class DailyForecastActivity extends Activity {
 
+    public String mCity;
     @InjectView(android.R.id.list) ListView mListView;
     @InjectView(android.R.id.empty) TextView mEmptyTextView;
+    @InjectView(R.id.locationLabel) TextView mDayLocationLabel;
     private Day[] mDays;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,9 @@ public class DailyForecastActivity extends Activity {
         DayAdapter adapter = new DayAdapter(this, mDays);
         mListView.setAdapter(adapter);
         mListView.setEmptyView(mEmptyTextView);
+
+
+        //mDayLocationLabel.setText(MainActivity.mCity)
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

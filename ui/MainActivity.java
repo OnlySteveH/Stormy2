@@ -64,7 +64,7 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
     public double mLongitude = 1.3;
     public String mCity;
     public String mCountryCode;
-     public String newString = new String();
+
     @InjectView(R.id.timeLabel) TextView mTimeLabel;
     @InjectView(R.id.temperatureLabel) TextView mTemperatureLabel;
     @InjectView(R.id.humidityValue) TextView mHumidityValue;
@@ -92,13 +92,6 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         startActivity(intent);
     }
 
-//    public String getRealTime(){
-//        SimpleDateFormat format = new SimpleDateFormat("k:mm", Locale.US);
-//        format.setTimeZone(TimeZone.getTimeZone("GMT-8:00"));
-//        Date day = new Date();
-//        return format.format(day);
-//    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,17 +105,12 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         buildGoogleApiClient();
         createLocationRequest();
 
-        // final Double latitude = 52.437777;
-        // final Double longitude = 1.390400;
-
         mRefreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getForecast(mLatitude, mLongitude);
             }
         });
-        // call getForecast later once LocationServices has connected
-        //getForecast(latitude, longitude);
     }
 
     protected synchronized void buildGoogleApiClient() {
